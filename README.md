@@ -2,7 +2,7 @@
 
 Modelling Machine Learning for Property Sales Price Prediction with deployment in here: https://property-price-prediction-335eaff00c71.herokuapp.com/
 
-![My Website Demo](./assets/website-demo.gif)
+![Propety Price Prediction Demo](./assets/gif.gif)
 
 ## What's this model about?
 
