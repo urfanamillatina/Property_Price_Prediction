@@ -21,7 +21,7 @@ The datasets used in this model: data.csv, train.csv and test.csv which are acqu
 ## EDA:
 From 80 independent features, only 18 features have strong correlations ≥0.5 or ≤-0.5 with the target feature 'SalePrice'. Thus, the rest of the features are dropped.
 
-# Data Pre-Processing:
+## Data Pre-Processing:
 1. One-hot-encoding to convert categorical feature to numerical feature
 2. Using StandarScaler to scale the values from all variables to 0.
 
