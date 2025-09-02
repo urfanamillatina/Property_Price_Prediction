@@ -1,4 +1,4 @@
-#import json
+import json
 import pickle
 from flask import Flask, request, app, jsonify, url_for, render_template
 import numpy as np
@@ -13,7 +13,7 @@ feature_columns = pickle.load(open('feature_columns.pkl', 'rb'))
 
 # You'll also need to know which features are categorical and numerical
 # Add these based on your original data preparation
-num_features = ['OverallQual', 'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF','1stFlrSF','GrLivArea','FullBath', 'TotRmsAbvGrd ','GarageCars','GarageArea']  
+num_features = ['OverallQual', 'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF','1stFlrSF','GrLivArea','FullBath', 'TotRmsAbvGrd','GarageCars','GarageArea']  
 cat_features = ['MSZoning', 'Utilities', 'Neighborhood', 'BldgType','HouseStyle','Heating', 'Electrical', 'SaleType']  
 
 @app.route('/')

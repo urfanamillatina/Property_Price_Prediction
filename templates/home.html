@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .prediction {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            border-radius: 4px;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        @media (max-width: 600px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Property Price Prediction Tool</h1>
+        <p>Please fill in the property details below to get a price prediction:</p>
+        
+        <form action="/predict" method="post">
+            <div class="two-column">
+                <!-- Categorical Features -->
+                <div class="form-group">
+                    <label for="MSZoning">Zoning Classification:</label>
+                    <select id="MSZoning" name="MSZoning" required>
+                        <option value="RL">Residential Low Density (RL)</option>
+                        <option value="RM">Residential Medium Density (RM)</option>
+                        <option value="FV">Floating Village Residential (FV)</option>
+                        <option value="RH">Residential High Density (RH)</option>
+                        <option value="C(all)">Commercial (C(all))</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Utilities">Utilities:</label>
+                    <select id="Utilities" name="Utilities" required>
+                        <option value="AllPub">All Public Utilities (AllPub)</option>
+                        <option value="NoSeWa">Electricity and Gas Only (NoSeWa)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Neighborhood">Neighborhood:</label>
+                    <select id="Neighborhood" name="Neighborhood" required>
+                        <option value="CollgCr">College Creek</option>
+                        <option value="Veenker">Veenker</option>
+                        <option value="Crawfor">Crawford</option>
+                        <option value="NoRidge">Northridge</option>
+                        <option value="Mitchel">Mitchell</option>
+                        <option value="Somerst">Somerset</option>
+                        <option value="NWAmes">Northwest Ames</option>
+                        <option value="OldTown">Old Town</option>
+                        <option value="BrkSide">Brookside</option>
+                        <option value="Sawyer">Sawyer</option>
+                        <option value="NridgHt">Northridge Heights</option>
+                        <option value="NAmes">North Ames</option>
+                        <option value="SawyerW">Sawyer West</option>
+                        <option value="IDOTRR">Iowa DOT and Rail Road</option>
+                        <option value="MeadowV">Meadow Village</option>
+                        <option value="Edwards">Edwards</option>
+                        <option value="Timber">Timberland</option>
+                        <option value="Gilbert">Gilbert</option>
+                        <option value="StoneBr">Stone Brook</option>
+                        <option value="ClearCr">Clear Creek</option>
+                        <option value="NPkVill">Northpark Villa</option>
+                        <option value="Blmngtn">Bloomington Heights</option>
+                        <option value="BrDale">Briardale</option>
+                        <option value="SWISU">South & West of Iowa State University</option>
+                        <option value="Blueste">Bluestem</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="BldgType">Building Type:</label>
+                    <select id="BldgType" name="BldgType" required>
+                        <option value="1Fam">Single-Family Detached</option>
+                        <option value="2fmCon">Two-Family Conversion</option>
+                        <option value="Duplex">Duplex</option>
+                        <option value="TwnhsE">Townhouse End Unit</option>
+                        <option value="Twnhs">Townhouse Inside Unit</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="HouseStyle">House Style:</label>
+                    <select id="HouseStyle" name="HouseStyle" required>
+                        <option value="2Story">Two Story</option>
+                        <option value="1Story">One Story</option>
+                        <option value="1.5Fin">One and One-Half Story: 2nd Level Finished</option>
+                        <option value="1.5Unf">One and One-Half Story: 2nd Level Unfinished</option>
+                        <option value="SFoyer">Split Foyer</option>
+                        <option value="SLvl">Split Level</option>
+                        <option value="2.5Unf">Two and One-Half Story: 2nd Level Unfinished</option>
+                        <option value="2.5Fin">Two and One-Half Story: 2nd Level Finished</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Heating">Heating Type:</label>
+                    <select id="Heating" name="Heating" required>
+                        <option value="GasA">Forced Air Furnace</option>
+                        <option value="GasW">Gas Hot Water or Steam Heat</option>
+                        <option value="Grav">Gravity Furnace</option>
+                        <option value="Wall">Wall Furnace</option>
+                        <option value="OthW">Hot Water or Steam Heat Other than Gas</option>
+                        <option value="Floor">Floor Furnace</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Electrical">Electrical System:</label>
+                    <select id="Electrical" name="Electrical" required>
+                        <option value="SBrkr">Standard Circuit Breakers & Romex</option>
+                        <option value="FuseF">Fuse Box over 60 AMP and all Romex wiring (Average)</option>
+                        <option value="FuseA">60 AMP Fuse Box and mostly Romex wiring (Fair)</option>
+                        <option value="FuseP">60 AMP Fuse Box and mostly knob & tube wiring (Poor)</option>
+                        <option value="Mix">Mixed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="SaleType">Sale Type:</label>
+                    <select id="SaleType" name="SaleType" required>
+                        <option value="WD">Warranty Deed - Conventional</option>
+                        <option value="New">Home just constructed and sold</option>
+                        <option value="COD">Court Officer Deed/Estate</option>
+                        <option value="ConLD">Contract Low Down</option>
+                        <option value="ConLI">Contract Low Interest</option>
+                        <option value="CWD">Warranty Deed - Cash</option>
+                        <option value="ConLw">Contract Low Down Payment and Low Interest</option>
+                        <option value="Con">Contract</option>
+                        <option value="Oth">Other</option>
+                    </select>
+                </div>
+
+                <!-- Numerical Features -->
+                <div class="form-group">
+                    <label for="OverallQual">Overall Quality (1-10):</label>
+                    <input type="number" id="OverallQual" name="OverallQual" min="1" max="10" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="YearBuilt">Year Built:</label>
+                    <input type="number" id="YearBuilt" name="YearBuilt" min="1800" max="2023" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="YearRemodAdd">Remodel Year:</label>
+                    <input type="number" id="YearRemodAdd" name="YearRemodAdd" min="1800" max="2023" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="TotalBsmtSF">Total Basement Area (sq ft):</label>
+                    <input type="number" id="TotalBsmtSF" name="TotalBsmtSF" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="1stFlrSF">First Floor Area (sq ft):</label>
+                    <input type="number" id="1stFlrSF" name="1stFlrSF" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="GrLivArea">Above Grade Living Area (sq ft):</label>
+                    <input type="number" id="GrLivArea" name="GrLivArea" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="FullBath">Full Bathrooms Above Grade:</label>
+                    <input type="number" id="FullBath" name="FullBath" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="TotRmsAbvGrd">Total Rooms Above Grade:</label>
+                    <input type="number" id="TotRmsAbvGrd" name="TotRmsAbvGrd" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="GarageCars">Garage Car Capacity:</label>
+                    <input type="number" id="GarageCars" name="GarageCars" min="0" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="GarageArea">Garage Area (sq ft):</label>
+                    <input type="number" id="GarageArea" name="GarageArea" min="0" step="1" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Predict Property Price</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="prediction">
+            <h3>Prediction Result:</h3>
+            <p>{{ prediction_text }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
